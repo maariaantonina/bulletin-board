@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
 //import clsx from 'clsx';
 
 // import { connect } from 'react-redux';
@@ -16,7 +18,6 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 290,
     flexGrow: 1,
     minHeight: 340,
   },
@@ -24,27 +25,22 @@ const useStyles = makeStyles({
     height: 140,
   },
   description: {
-    minHeight: 80,
+    minHeight: 165,
   },
 });
 
-const Component = ({ title, photo, description }) => {
+const Component = ({ title, photo, description, _id }) => {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea component={Link} to={`/post/${_id}`} underline="none">
         <CardMedia className={classes.media} image={photo} title={title} />
-        <CardContent>
+        <CardContent className={classes.description}>
           <Typography gutterBottom variant="h5" component="h2">
             {title}
           </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            className={classes.description}
-          >
+          <Typography variant="body2" color="textSecondary" component="p">
             {description}
           </Typography>
         </CardContent>
@@ -65,6 +61,8 @@ Component.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string,
   photo: PropTypes.string,
+  description: PropTypes.string,
+  _id: PropTypes.string,
 };
 
 // const mapStateToProps = state => ({
