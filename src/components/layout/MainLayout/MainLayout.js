@@ -8,12 +8,29 @@ import clsx from 'clsx';
 
 import styles from './MainLayout.module.scss';
 
-const Component = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
-    <h2>MainLayout</h2>
-    {children}
-  </div>
-);
+import { Header } from '../Header/Header';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100%',
+  },
+  content: {
+    height: '100%',
+    padding: theme.spacing(4),
+  },
+}));
+
+const Component = ({ className, children }) => {
+  const classes = useStyles();
+  return (
+    <div className={clsx(className, classes.root)}>
+      <Header></Header>
+      {children}
+    </div>
+  );
+};
 
 Component.propTypes = {
   children: PropTypes.node,

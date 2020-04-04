@@ -3,35 +3,58 @@ import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from 'react-redux';
+import { getAll } from '../../../redux/postsRedux.js';
 
-import styles from './Homepage.module.scss';
+//import styles from './Homepage.module.scss';
 
-const Component = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
-    <h2>Homepage</h2>
-    {children}
-  </div>
-);
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
-Component.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
+import { ItemBox } from '../../features/ItemBox/ItemBox';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+}));
+
+const Component = ({ className, items }) => {
+  const classes = useStyles();
+  return (
+    <Container className={clsx(className, classes.root)}>
+      <Box px={3} mt={5}>
+        <Grid container spacing={1}>
+          {items.map((thing) => (
+            <Grid key={thing._id} item xs={12} md={3}>
+              <ItemBox {...thing}></ItemBox>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </Container>
+  );
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+Component.propTypes = {
+  className: PropTypes.string,
+  items: PropTypes.array,
+};
+
+const mapStateToProps = (state) => ({
+  items: getAll(state),
+});
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const ComponentContainer = connect(mapStateToProps)(Component);
 
 export {
-  Component as Homepage,
-  // Container as Homepage,
+  //Component as Homepage,
+  ComponentContainer as Homepage,
   Component as HomepageComponent,
 };
