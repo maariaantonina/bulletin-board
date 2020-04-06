@@ -46,7 +46,12 @@ const Component = ({ title, photo, description, _id }) => {
         </CardContent>
       </CardActionArea>
       <CardActions mb={0}>
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          component={Link}
+          to={`/post/${_id}/edit`}
+        >
           Edit
         </Button>
         <Button size="small" color="primary">

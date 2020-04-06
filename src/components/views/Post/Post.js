@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
 //import clsx from 'clsx';
 
 import { connect } from 'react-redux';
@@ -41,6 +43,7 @@ const Component = ({
   location,
   email,
   phone,
+  _id,
 }) => {
   const classes = useStyles();
 
@@ -80,7 +83,12 @@ const Component = ({
               </Box>
             </CardContent>
             <CardActions>
-              <Button size="small" color="primary">
+              <Button
+                size="small"
+                color="primary"
+                component={Link}
+                to={`/post/${_id}/edit`}
+              >
                 Edit
               </Button>
               <Button size="small" color="primary">
@@ -104,6 +112,7 @@ Component.propTypes = {
   location: PropTypes.string,
   email: PropTypes.string,
   phone: PropTypes.string,
+  _id: PropTypes.string,
 };
 
 const mapStateToProps = (state, props) => {

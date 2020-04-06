@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 //import clsx from 'clsx';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from 'react-redux';
+import { isLogged, logToggle } from '../../../redux/userRedux.js';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -48,13 +48,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Component = ({ className, children }) => {
+const Component = ({ className, logged, logToggle }) => {
   const classes = useStyles();
   //if auth==true you need to login
-  const [auth, setAuth] = React.useState(true);
+  const [auth, setAuth] = React.useState(!logged);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
+    logToggle();
   };
 
   return (
@@ -70,7 +71,7 @@ const Component = ({ className, children }) => {
                 aria-label="login switch"
               />
             }
-            label={auth ? 'Logout' : 'Login'}
+            label={auth ? 'Logged out' : 'Logged in'}
           />
         </FormGroup>
       </Container>
@@ -116,20 +117,25 @@ const Component = ({ className, children }) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  logged: PropTypes.bool,
+  logToggle: PropTypes.func,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = (state) => ({
+  logged: isLogged(state),
+});
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  logToggle: () => dispatch(logToggle()),
+});
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const ComponentContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Component);
 
 export {
-  Component as Header,
-  // Container as Header,
+  //Component as Header,
+  ComponentContainer as Header,
   Component as HeaderComponent,
 };
