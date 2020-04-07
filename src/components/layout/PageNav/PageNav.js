@@ -18,8 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Component = ({ className }) => {
+const Component = ({ className, logout }) => {
   const classes = useStyles();
+  const sendData = () => logout();
   return (
     <nav className={clsx(className, styles.root)}>
       <Button
@@ -40,13 +41,7 @@ const Component = ({ className }) => {
       >
         Your posts
       </Button>
-      <Button
-        component={NavLink}
-        to="#"
-        activeClassName="active"
-        variant="text"
-        className={classes.root}
-      >
+      <Button variant="text" className={classes.root} onClick={sendData}>
         Log out
       </Button>
     </nav>
@@ -55,6 +50,7 @@ const Component = ({ className }) => {
 
 Component.propTypes = {
   className: PropTypes.string,
+  logout: PropTypes.func,
 };
 
 // const mapStateToProps = state => ({

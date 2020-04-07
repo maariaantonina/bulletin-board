@@ -1,4 +1,10 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 50vw;
+  align-items: center;
+  margin: auto;
+}

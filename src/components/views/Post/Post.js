@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { getById } from '../../../redux/postsRedux.js';
+import { isLogged } from '../../../redux/userRedux.js';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -44,6 +45,7 @@ const Component = ({
   email,
   phone,
   _id,
+  logged,
 }) => {
   const classes = useStyles();
 
@@ -83,17 +85,21 @@ const Component = ({
               </Box>
             </CardContent>
             <CardActions>
-              <Button
-                size="small"
-                color="primary"
-                component={Link}
-                to={`/post/${_id}/edit`}
-              >
-                Edit
-              </Button>
-              <Button size="small" color="primary">
-                Delete
-              </Button>
+              {logged && (
+                <div>
+                  <Button
+                    size="small"
+                    color="primary"
+                    component={Link}
+                    to={`/post/${_id}/edit`}
+                  >
+                    Edit
+                  </Button>
+                  <Button size="small" color="primary">
+                    Delete
+                  </Button>
+                </div>
+              )}
             </CardActions>
           </Box>
         </Card>
@@ -113,12 +119,14 @@ Component.propTypes = {
   email: PropTypes.string,
   phone: PropTypes.string,
   _id: PropTypes.string,
+  logged: PropTypes.bool,
 };
 
 const mapStateToProps = (state, props) => {
   const post = getById(state, props.match.params.id);
   return {
     ...post,
+    logged: isLogged(state),
   };
 };
 

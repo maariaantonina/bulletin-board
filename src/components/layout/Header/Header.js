@@ -58,6 +58,11 @@ const Component = ({ className, logged, logToggle }) => {
     logToggle();
   };
 
+  const logout = () => {
+    setAuth(true);
+    logToggle();
+  };
+
   return (
     <div className={classes.root}>
       <Container>
@@ -105,7 +110,7 @@ const Component = ({ className, logged, logToggle }) => {
                   </Button>
                 </div>
               )}
-              {!auth && <PageNav />}
+              {!auth && <PageNav logout={logout} />}
             </Hidden>
           </Toolbar>
         </Container>
