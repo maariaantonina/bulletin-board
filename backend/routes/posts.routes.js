@@ -25,4 +25,14 @@ router.get('/posts/:id', async (req, res) => {
   }
 });
 
+router.post('/posts/add', async (req, res) => {
+  try {
+    const newPost = new Post({ ...req.body });
+    await newPost.save();
+    res.json(newPost);
+  } catch (err) {
+    res.status(500).json({ messaage: err });
+  }
+});
+
 module.exports = router;
