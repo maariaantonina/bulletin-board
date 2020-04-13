@@ -24,11 +24,10 @@ export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
 /* thunk creators */
 export const fetchPublished = () => {
   return (dispatch, getState) => {
-    dispatch(fetchStarted());
     try {
       const { posts } = getState();
-      console.log(posts.loading.active);
-      if (!posts.data.length || posts.loading.active === true) {
+      if (!posts.data.length || posts.loading.active === false) {
+        dispatch(fetchStarted());
         axios.get('http://localhost:8000/api/posts').then((res) => {
           dispatch(fetchSuccess(res.data));
         });
